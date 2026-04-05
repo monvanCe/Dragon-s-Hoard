@@ -1,4 +1,4 @@
-export const LOCAL_ASSET_BASE = "/assets";
+export const LOCAL_ASSET_BASE = `${import.meta.env.BASE_URL}assets`;
 
 export const LOCAL_ASSET_PATHS = {
   backgrounds: {
