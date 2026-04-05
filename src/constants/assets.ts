@@ -2,10 +2,10 @@ export const LOCAL_ASSET_BASE = `${import.meta.env.BASE_URL}assets`;
 
 export const LOCAL_ASSET_PATHS = {
   backgrounds: {
-    menu: `${LOCAL_ASSET_BASE}/backgrounds/menu.png`,
-    ace: `${LOCAL_ASSET_BASE}/backgrounds/ace.png`,
-    magic: `${LOCAL_ASSET_BASE}/backgrounds/magic.png`,
-    phoenix: `${LOCAL_ASSET_BASE}/backgrounds/phoenix.png`,
+    menu: `${LOCAL_ASSET_BASE}/backgrounds/menu.webp`,
+    ace: `${LOCAL_ASSET_BASE}/backgrounds/ace.webp`,
+    magic: `${LOCAL_ASSET_BASE}/backgrounds/magic.webp`,
+    phoenix: `${LOCAL_ASSET_BASE}/backgrounds/phoenix.webp`,
   },
   ui: {
     buttonIdle: `${LOCAL_ASSET_BASE}/ui/button-idle.png`,
