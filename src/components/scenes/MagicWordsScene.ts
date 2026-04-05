@@ -8,6 +8,7 @@ import {
 import { SceneBackdrop } from "@/components/common/SceneBackdrop";
 import { ScaledDesignRoot } from "@/components/common/ScaledDesignRoot";
 import { MagicWordsDialogueRenderer } from "@/components/scenes/magic/MagicWordsDialogueRenderer";
+import { MagicWordsDialogueTouchScrollController } from "@/components/scenes/magic/MagicWordsDialogueTouchScrollController";
 import {
   ERROR_COLOR,
   PANEL_FILL_COLOR,
@@ -85,6 +86,7 @@ export class MagicWordsScene implements SceneController {
   private readonly backButton: Container;
   private readonly reloadButton: Container;
   private readonly dialogueRenderer: MagicWordsDialogueRenderer;
+  private readonly scrollHitLayer = new Container();
   private readonly context: SceneContext;
   private isLoading = false;
   /** When true, the next payload reloads remote avatar/emoji textures (Reload Dialogue). */
@@ -125,14 +127,24 @@ export class MagicWordsScene implements SceneController {
 
     this.viewport.addChild(mask);
     this.viewport.mask = mask;
-    this.viewport.eventMode = "static";
-    this.viewport.hitArea = new Rectangle(
+
+    this.scrollHitLayer.hitArea = new Rectangle(
       0,
       0,
       MAGIC_WORDS_MASK_INITIAL_WIDTH,
       MAGIC_WORDS_DIALOGUE_VIEWPORT_HEIGHT,
     );
-    this.viewport.on("wheel", this.onDialogueWheel);
+    this.viewport.addChild(this.scrollHitLayer);
+    this.scrollHitLayer.on("wheel", this.onDialogueWheel);
+
+    new MagicWordsDialogueTouchScrollController(this.scrollHitLayer, {
+      isScrollable: () =>
+        this.dialogueContentHeight > MAGIC_WORDS_DIALOGUE_VIEWPORT_HEIGHT,
+      addScrollDelta: (deltaY) => {
+        this.dialogueScrollY += deltaY;
+        this.applyDialogueScrollBounds();
+      },
+    });
 
     this.backButton = createDungeonButton(
       "Back to Hoard",
@@ -224,7 +236,7 @@ export class MagicWordsScene implements SceneController {
       .clear()
       .rect(0, 0, maskW, MAGIC_WORDS_DIALOGUE_VIEWPORT_HEIGHT)
       .fill(0xffffff);
-    this.viewport.hitArea = new Rectangle(
+    this.scrollHitLayer.hitArea = new Rectangle(
       0,
       0,
       maskW,
