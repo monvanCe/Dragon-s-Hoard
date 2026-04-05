@@ -31,7 +31,7 @@ export class MenuScene implements SceneController {
   private readonly panelSprite: Sprite;
   private readonly title = createText("Dragon's Hoard", 40);
   private readonly subtitle = createMutedText(
-    "Softgames assignment — pick a trial by flame.",
+    "Pick a trial by flame — cards, words, and phoenix fire.",
   );
   private readonly footer = createText(
     "TypeScript · Pixi v8 · Full screen · Event bus",
